@@ -4,7 +4,6 @@ pipeline {
     environment {
         IMAGE_NAME = "vikkram-nodejs-app:latest"
         DOCKER_REPO = "vikkramsk2001/skemc-nodejs"
-        DOCKERHUB_CREDENTIALSID = "vikkram-dockerhub-token"
     }
 
     stages {
@@ -23,7 +22,7 @@ pipeline {
 
         stage('Docker login and Push') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'DOCKERHUB_CREDENTIALSID', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                withCredentials([usernamePassword(credentialsId: 'vikkram-dockerhub-token', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                     bat """
                         docker login -u %DOCKER_USER% -p %DOCKER_PASS%
                         docker tag %IMAGE_NAME% %DOCKER_REPO%:latest
